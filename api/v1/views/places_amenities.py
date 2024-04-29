@@ -5,7 +5,6 @@ from flask import jsonify, abort
 from os import getenv
 from api.v1.views import app_views, storage
 
-
 @app_views.route("/places/<place_id>/amenities",
                  methods=["GET"],
                  strict_slashes=False)
@@ -23,7 +22,6 @@ def place_amin(place_id):
 
     return jsonify(total_amni)
 
-
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["DELETE"],
                  strict_slashes=False)
@@ -33,7 +31,6 @@ def amenity_unlink(place_id, amenity_id):
         abort(404)
     if not storage.get("Amenity", str(amenity_id)):
         abort(404)
-
     fet_obj = storage.get("Place", place_id)
     found = 0
 
@@ -53,7 +50,6 @@ def amenity_unlink(place_id, amenity_id):
         responder = jsonify({})
         responder.status_code = 201
         return responder
-
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["POST"],

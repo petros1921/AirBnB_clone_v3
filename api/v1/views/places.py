@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""An API That handle Place objects"""
-
+"""An API That handle Place object"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.place import Place
@@ -8,6 +7,7 @@ from models.place import Place
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
+
 def place_city_by_id(city_id):
     """This will Return a place json"""
     place_lists = []
@@ -16,7 +16,6 @@ def place_city_by_id(city_id):
         place_lists.append(obj.to_json())
 
     return jsonify(place_lists)
-
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
@@ -43,9 +42,9 @@ def create_place(city_id):
 
     return responder
 
-
 @app_views.route("/places/<place_id>",  methods=["GET"],
                  strict_slashes=False)
+
 def places_id(place_id):
     """Return a place obj with a specified id or 404"""
 
@@ -55,7 +54,6 @@ def places_id(place_id):
         abort(404)
 
     return jsonify(fet_obj.to_json())
-
 
 @app_views.route("/places/<place_id>",  methods=["PUT"],
                  strict_slashes=False)
@@ -78,7 +76,6 @@ def place_put(place_id):
     fet_obj.save()
 
     return jsonify(fet_obj.to_json())
-
 
 @app_views.route("/places/<place_id>",  methods=["DELETE"],
                  strict_slashes=False)
