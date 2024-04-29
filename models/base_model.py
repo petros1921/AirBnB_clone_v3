@@ -61,7 +61,7 @@ class BaseModel:
     def to_dict(self, save_to_disk=False):
         data = {}
         for key, vlaue in self.__dict__.items():
-            if key != 'password' or (key == 'password' and isinstance(self, FileStorage) and save_to_disk):
+            if key != 'password' or (key == 'password' and save_to_disk):
                 data[key] = value
         return data
 
