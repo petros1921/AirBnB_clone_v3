@@ -25,8 +25,8 @@ def handle_404(exception):
 
 if __name__ == "__main__":
     # Set the host and port
-    host = getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(getenv('HBNB_API_PORT', 5000))
+    HOST = getenv('HBNB_API_HOST', '0.0.0.0')
+    PORT = int(getenv('HBNB_API_PORT', 5000))
     
     #run your Flask server
     app.run(host=HOST, port=PORT, threaded=True)
