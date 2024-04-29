@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
-"""index"""
+"""This is an index api."""
 
 from flask import jsonify
 from api.v1.views import app_views
-
 from models import storage
 
 
@@ -15,10 +14,10 @@ def status():
         "status": "OK"
     }
 
-    resp = jsonify(data)
-    resp.status_code = 200
+    responder = jsonify(data)
+    responder.status_code = 200
 
-    return resp
+    return responder
 
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
@@ -32,7 +31,7 @@ def stats():
         "users": storage.count("User"),
     }
 
-    resp = jsonify(data)
-    resp.status_code = 200
+    responder = jsonify(data)
+    responder.status_code = 200
 
-    return resp
+    return responder
