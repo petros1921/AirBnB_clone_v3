@@ -1,31 +1,28 @@
 #!/usr/bin/python3
-"""
-index
-"""
-
+""" Index """
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+from models import storage
 from api.v1.views import app_views
 from flask import jsonify
-from models import storage
 
-#create a route /status on the object app_views that returns a JSON: "status": "OK"
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    answer = {"status": "OK"}
-    return jsonify(answer)
+    """Return the status of the API."""
+    return jsonify({"status": "OK"})
 
-#Create an endpoint that retrieves the number of each objects by type
-@app_views.route('/stats', methods=['GET'])
-def status():
-    counts = {
-            'amenities': storage.count('Amenity'),
-            'cities': storage.count('City'),
-            'places': storage.count('Place'),
-            'reviews': storage.count('Review'),
-            'states': storage.count('State'),
-            'users': storage.count('User')
-    }
-    
-    return jsonify(counts)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def number_objects():
+    """Retuen atwo num obj for each of them."""
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
 
+    objects_num = {}
+    for index in range(len(classes)):
+        objects_num[names[index]] = storage.count(classes[index])
 
-
+    return jsonify(objects_num)
