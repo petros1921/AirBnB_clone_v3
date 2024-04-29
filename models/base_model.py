@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains class BaseModel
-"""
+"""A class Base model"""
 
 from datetime import datetime
 import models
@@ -20,7 +18,7 @@ else:
 
 
 class BaseModel:
-    """The BaseModel class from which future classes will be derived"""
+    """Retrive a BaseModel in which future classes will be derived"""
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
@@ -48,23 +46,26 @@ class BaseModel:
             self.updated_at = self.created_at
 
     def __str__(self):
-        """String representation of the BaseModel class"""
+        """Representation of a String of the BaseModel class"""
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
     def save(self):
-        """updates the attribute 'updated_at' with the current datetime"""
+        """This will save and retrive and the root"""
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self, save_to_disk=False):
         data = {}
-        for key, vlaue in self.__dict__.items():
-            if key != 'password' or (key == 'password' and save_to_disk):
-                data[key] = value
+        for k, v in self.__dict__.items():
+            if k != 'password' or (k == 'password' and save_to_disk):
+                if isinstance(v, datetime):
+                    data[k] = v.isoformat()
+                else:
+                    data[k] = v
         return data
 
     def delete(self):
-        """delete the current instance from the storage"""
+        """Delate an instance from a storage"""
         models.storage.delete(self)
