@@ -76,11 +76,8 @@ class FileStorage:
         if cls not in classes.values():
             return None
 
-        all_class = models.storage.all(cls)
-        for value in all_class.values():
-            if (value.id == id):
-                return value
-            return None
+        key = cls.__name__ + '.' + id
+        return self.__objects.get(key)
 
     def count(self, cls=None):
         """Return a number of objects in storage."""
